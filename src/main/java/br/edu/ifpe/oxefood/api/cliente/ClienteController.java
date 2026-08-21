@@ -23,5 +23,4 @@ public class ClienteController {
         Cliente clienteCadastrado = clienteService.cadastrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteCadastrado);
     }
-
 }

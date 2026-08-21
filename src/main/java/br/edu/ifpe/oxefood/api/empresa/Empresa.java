@@ -1,4 +1,4 @@
-package br.edu.ifpe.oxefood.api.cliente;
+package br.edu.ifpe.oxefood.api.empresa;
 
 import java.time.LocalDate;
 
@@ -14,28 +14,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Cliente")
-@SQLRestriction("habilitado = true")
+@Table(name = "Empresa")
+@SQLRestriction("Habilitado = true")
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente extends EntidadeAuditavel {
+public class Empresa extends EntidadeAuditavel {
 
     @Column
-    private String nome;
+    private String site;
 
     @Column
-    private LocalDate dataNascimento;
+    private String cnpj;
 
     @Column
-    private String cpf;
+    private String inscricaoEstadual;
 
     @Column
-    private String foneCelular;
+    private String nomeEmpresarial;
 
     @Column
-    private String foneFixo;
+    private String nomeFantasia;
 
+    @Column
+    private String fone;
+
+    @Column
+    private String foneAlternativo;
+    
 }
