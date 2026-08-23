@@ -1,7 +1,9 @@
-package br.edu.ifpe.oxefood.api.empresa;
+package br.edu.ifpe.oxefood.api.produto;
 
 import org.hibernate.annotations.SQLRestriction;
 
+import br.edu.ifpe.oxefood.api.categoriaProduto.CategoriaProduto;
+import br.edu.ifpe.oxefood.api.empresa.Empresa;
 import br.edu.ifpe.oxefood.util.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,34 +14,38 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Empresa")
+@Table(name = "Produto")
 @SQLRestriction("Habilitado = true")
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Empresa extends EntidadeAuditavel {
+
+public class Produto extends EntidadeAuditavel {
 
     @Column
-    private String site;
+    private Empresa empresa;
 
     @Column
-    private String cnpj;
+    private CategoriaProduto categoria;
 
     @Column
-    private String inscricaoEstadual;
+    private String codigo;
 
     @Column
-    private String nomeEmpresarial;
+    private String titulo;
 
     @Column
-    private String nomeFantasia;
+    private String descricao;
 
     @Column
-    private String fone;
+    private Double valorUnitario;
 
     @Column
-    private String foneAlternativo;
+    private Integer tempoEntregaMinimo;
+
+    @Column
+    private Integer tempoEntregaMaximo;
     
 }
