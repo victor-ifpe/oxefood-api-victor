@@ -7,6 +7,8 @@ import br.edu.ifpe.oxefood.api.empresa.Empresa;
 import br.edu.ifpe.oxefood.util.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +26,12 @@ import lombok.Setter;
 
 public class Produto extends EntidadeAuditavel {
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
     private CategoriaProduto categoria;
 
     @Column
@@ -47,5 +51,5 @@ public class Produto extends EntidadeAuditavel {
 
     @Column
     private Integer tempoEntregaMaximo;
-    
+
 }
