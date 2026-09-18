@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifpe.oxefood.api.cliente.Cliente;
-import br.edu.ifpe.oxefood.api.empresa.Empresa;
-
 @RestController
 @RequestMapping("/api/produto")
 public class ProdutoController {
