@@ -1,4 +1,3 @@
-
 package br.edu.ifpe.oxefood.api.categoriaProduto;
 
 import lombok.AllArgsConstructor;

@@ -16,7 +16,15 @@ public class EmpresaService {
     }
 
     public Empresa build(EmpresaDTO dto) {
-        Empresa empresa = new Empresa();
+
+        Empresa empresa = null;
+
+        if (dto.getId() == null) {
+            empresa = new Empresa();
+        } else {
+            empresa = repository.findById(dto.getId()).get();
+        }
+
         empresa.setSite(dto.getSite());
         empresa.setCnpj(dto.getCnpj());
         empresa.setInscricaoEstadual(dto.getInscricaoEstadual());
@@ -42,5 +50,12 @@ public class EmpresaService {
 
     public Empresa buscarPorId(Long id) {
         return repository.findById(id).get();
+    }
+
+    @Transactional
+    public Empresa atualizar(EmpresaDTO dto) {
+
+        Empresa empresa = build(dto);
+        return repository.save(empresa);
     }
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CategoriaProdutoService {
 
@@ -25,4 +27,21 @@ public class CategoriaProdutoService {
     public CategoriaProduto buscarPorId(Long id) {
         return repository.findById(id).get();
     }
+
+    @Transactional
+    public CategoriaProduto atualizar(CategoriaProdutoDTO dto) {
+
+        CategoriaProduto categoriaProduto = repository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        categoriaProduto.setDescricao(dto.getDescricao());
+
+        return repository.save(categoriaProduto);
+    }
+
+    @Transactional
+    public void deletar(Long id) {
+        repository.deleteById(id);
+    }
+
 }
