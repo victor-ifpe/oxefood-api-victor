@@ -86,4 +86,13 @@ public class ProdutoService {
         Produto produto = build(dto);
         return repository.save(produto);
     }
+
+    @Transactional
+    public void remover(Long id) {
+
+        Produto produto = repository.findById(id).get();
+        produto.setHabilitado(false);
+
+        repository.save(produto);
+    }
 }

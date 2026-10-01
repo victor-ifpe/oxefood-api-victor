@@ -40,8 +40,14 @@ public class CategoriaProdutoService {
     }
 
     @Transactional
-    public void deletar(Long id) {
-        repository.deleteById(id);
+    public void remover(Long id) {
+
+        CategoriaProduto categoriaProduto = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        categoriaProduto.setHabilitado(false);
+
+        repository.save(categoriaProduto);
     }
 
 }

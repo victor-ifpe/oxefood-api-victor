@@ -2,6 +2,7 @@ package br.edu.ifpe.oxefood.api.categoriaProduto;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,8 +43,10 @@ public class CategoriaProdutoController {
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
-        service.deletar(id);
+    public ResponseEntity<Void> remover(@PathVariable Long id) {
+
+        service.remover(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
