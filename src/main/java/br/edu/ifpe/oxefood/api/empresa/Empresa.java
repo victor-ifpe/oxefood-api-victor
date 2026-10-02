@@ -21,25 +21,25 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Empresa extends EntidadeAuditavel {
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String site;
 
-    @Column
+    @Column(length = 14, nullable = false, unique = true)
     private String cnpj;
 
-    @Column
+    @Column(length = 20)
     private String inscricaoEstadual;
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String nomeEmpresarial;
 
-    @Column
+    @Column(length = 100)
     private String nomeFantasia;
 
-    @Column
+    @Column(length = 15)
     private String fone;
 
-    @Column
+    @Column(length = 15)
     private String foneAlternativo;
     
 }

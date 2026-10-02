@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.edu.ifpe.oxefood.exception.ProdutoException;
 import br.edu.ifpe.oxefood.api.categoriaProduto.CategoriaProduto;
 import br.edu.ifpe.oxefood.api.categoriaProduto.CategoriaProdutoRepository;
 import br.edu.ifpe.oxefood.api.empresa.Empresa;
@@ -28,6 +29,17 @@ public class ProdutoService {
     }
 
     public Produto build(ProdutoDTO dto) {
+
+        // Validação do valor do produto
+        if (dto.getValorUnitario() < 20) {
+            throw new ProdutoException(
+                    ProdutoException.MSG_VALOR_MINIMO_PRODUTO);
+        }
+
+        if (dto.getValorUnitario() > 100) {
+            throw new ProdutoException(
+                    ProdutoException.MSG_VALOR_MAXIMO_PRODUTO);
+        }
 
         Produto produto = null;
 
@@ -67,6 +79,7 @@ public class ProdutoService {
     public Produto cadastrar(ProdutoDTO dto) {
 
         Produto produto = build(dto);
+
         produto.setHabilitado(true);
 
         return repository.save(produto);
@@ -84,6 +97,7 @@ public class ProdutoService {
     public Produto atualizar(ProdutoDTO dto) {
 
         Produto produto = build(dto);
+
         return repository.save(produto);
     }
 

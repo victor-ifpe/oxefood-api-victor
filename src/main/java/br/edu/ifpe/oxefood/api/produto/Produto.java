@@ -34,22 +34,22 @@ public class Produto extends EntidadeAuditavel {
     @JoinColumn(name = "categoria_id")
     private CategoriaProduto categoria;
 
-    @Column
+    @Column(length = 20, nullable = false, unique = true)
     private String codigo;
 
-    @Column
+    @Column(length = 100, nullable = false)
     private String titulo;
 
-    @Column
+    @Column(length = 255)
     private String descricao;
 
-    @Column
+    @Column(nullable = false)
     private Double valorUnitario;
 
-    @Column
+    @Column(nullable = false)
     private Integer tempoEntregaMinimo;
 
-    @Column
+    @Column(nullable = false)
     private Integer tempoEntregaMaximo;
 
 }

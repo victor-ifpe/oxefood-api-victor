@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.edu.ifpe.oxefood.exception.ClienteException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -16,6 +17,16 @@ public class ClienteService {
     }
 
     public Cliente build(ClienteDTO dto) {
+
+        // Validação do telefone celular
+        if (dto.getFoneCelular() != null && !dto.getFoneCelular().startsWith("81")) {
+            throw new ClienteException(ClienteException.MSG_TELEFONE_INVALIDO);
+        }
+
+        // Validação do telefone fixo
+        if (dto.getFoneFixo() != null && !dto.getFoneFixo().startsWith("81")) {
+            throw new ClienteException(ClienteException.MSG_TELEFONE_INVALIDO);
+        }
 
         Cliente cliente = null;
 

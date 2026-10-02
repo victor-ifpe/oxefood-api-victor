@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/produto")
 public class ProdutoController {
@@ -24,7 +26,7 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> cadastrar(@RequestBody ProdutoDTO dto) {
+    public ResponseEntity<Produto> cadastrar(@RequestBody @Valid ProdutoDTO dto) {
         Produto produtoCadastrado = produtoService.cadastrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoCadastrado);
     }
@@ -40,7 +42,7 @@ public class ProdutoController {
     }
 
     @PutMapping
-    public ResponseEntity<Produto> atualizar(@RequestBody ProdutoDTO dto) {
+    public ResponseEntity<Produto> atualizar(@RequestBody @Valid ProdutoDTO dto) {
 
         Produto produtoAtualizado = produtoService.atualizar(dto);
         return ResponseEntity.ok(produtoAtualizado);
