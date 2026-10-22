@@ -26,7 +26,6 @@ public class ClienteDTO {
     @NotNull(message = "A data de nascimento é obrigatória")
     private LocalDate dataNascimento;
 
-    @CPF(message = "O CPF é inválido")
     @NotBlank(message = "O CPF é obrigatório")
     private String cpf;
 

@@ -20,7 +20,6 @@ public class EmpresaDTO {
     @Length(max = 100, message = "O site não pode exceder 100 caracteres")
     private String site;
 
-    @CNPJ(message = "O CNPJ é inválido")
     @NotBlank(message = "O CNPJ é obrigatório")
     private String cnpj;
 
