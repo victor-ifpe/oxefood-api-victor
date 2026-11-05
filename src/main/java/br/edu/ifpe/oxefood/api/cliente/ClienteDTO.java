@@ -3,8 +3,8 @@ package br.edu.ifpe.oxefood.api.cliente;
 import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.br.CPF;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,6 +18,13 @@ import lombok.NoArgsConstructor;
 public class ClienteDTO {
 
     private Long id;
+
+    @NotBlank(message = "O e-mail é de preenchimento obrigatório")
+    @Email
+    private String email;
+
+    @NotBlank(message = "A senha é de preenchimento obrigatório")
+    private String password;
 
     @NotBlank(message = "O nome é obrigatório")
     @Length(min = 2, max = 100, message = "O nome deve ter entre 2 e 100 caracteres")

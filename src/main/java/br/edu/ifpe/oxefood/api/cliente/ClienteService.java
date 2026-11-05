@@ -6,6 +6,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.edu.ifpe.oxefood.api.acesso.Perfil;
+import br.edu.ifpe.oxefood.api.acesso.PerfilRepository;
+import br.edu.ifpe.oxefood.api.acesso.Usuario;
+import br.edu.ifpe.oxefood.api.acesso.UsuarioService;
 import br.edu.ifpe.oxefood.exception.ClienteException;
 import br.edu.ifpe.oxefood.modelo.cliente.EnderecoCliente;
 import br.edu.ifpe.oxefood.modelo.cliente.EnderecoClienteRepository;
@@ -16,12 +20,18 @@ public class ClienteService {
 
     private final ClienteRepository repository;
     private final EnderecoClienteRepository enderecoClienteRepository;
+    private final UsuarioService usuarioService;
+    private final PerfilRepository perfilUsuarioRepository;
 
     public ClienteService(
             ClienteRepository repository,
-            EnderecoClienteRepository enderecoClienteRepository) {
+            EnderecoClienteRepository enderecoClienteRepository, UsuarioService usuarioService,
+            PerfilRepository perfilUsuarioRepository) {
         this.repository = repository;
         this.enderecoClienteRepository = enderecoClienteRepository;
+        this.usuarioService = usuarioService;
+        this.perfilUsuarioRepository = perfilUsuarioRepository;
+
     }
 
     public Cliente build(ClienteDTO dto) {
@@ -43,6 +53,13 @@ public class ClienteService {
         if (dto.getId() == null) {
             // Montado para o cadastro
             cliente = new Cliente();
+
+            Usuario usuario = new Usuario();
+            usuario.setUsername(dto.getEmail());
+            usuario.setPassword(dto.getPassword());
+            usuario.getRoles().add(new Perfil(Perfil.ROLE_CLIENTE));
+            cliente.setUsuario(usuario);
+
         } else {
             // Consultado para a alteração
             cliente = repository.findById(dto.getId()).get();
@@ -113,8 +130,15 @@ public class ClienteService {
     public Cliente cadastrar(ClienteDTO dto) {
 
         Cliente cliente = build(dto);
-        cliente.setHabilitado(true);
 
+        usuarioService.save(cliente.getUsuario());
+
+        for (Perfil perfil : cliente.getUsuario().getRoles()) {
+            perfil.setHabilitado(Boolean.TRUE);
+            perfilUsuarioRepository.save(perfil);
+        }
+
+        cliente.setHabilitado(true);
         return repository.save(cliente);
     }
 

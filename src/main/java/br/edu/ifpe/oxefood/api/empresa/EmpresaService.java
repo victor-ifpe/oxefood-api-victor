@@ -4,15 +4,24 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import br.edu.ifpe.oxefood.api.acesso.Perfil;
+import br.edu.ifpe.oxefood.api.acesso.PerfilRepository;
+import br.edu.ifpe.oxefood.api.acesso.Usuario;
+import br.edu.ifpe.oxefood.api.acesso.UsuarioService;
 import jakarta.transaction.Transactional;
 
 @Service
 public class EmpresaService {
 
     private final EmpresaRepository repository;
+    private final UsuarioService usuarioService;
+    private final PerfilRepository perfilUsuarioRepository;
 
-    public EmpresaService(EmpresaRepository repository) {
+    public EmpresaService(EmpresaRepository repository, UsuarioService usuarioService,
+            PerfilRepository perfilUsuarioRepository) {
         this.repository = repository;
+        this.usuarioService = usuarioService;
+        this.perfilUsuarioRepository = perfilUsuarioRepository;
     }
 
     public Empresa build(EmpresaDTO dto) {
@@ -21,6 +30,13 @@ public class EmpresaService {
 
         if (dto.getId() == null) {
             empresa = new Empresa();
+
+            Usuario usuario = new Usuario();
+            usuario.setUsername(dto.getEmail());
+            usuario.setPassword(dto.getPassword());
+            usuario.getRoles().add(new Perfil(Perfil.ROLE_EMPRESA));
+            empresa.setUsuario(usuario);
+
         } else {
             empresa = repository.findById(dto.getId()).get();
         }
@@ -40,6 +56,14 @@ public class EmpresaService {
     public Empresa cadastrar(EmpresaDTO dto) {
 
         Empresa empresa = build(dto);
+
+        usuarioService.save(empresa.getUsuario());
+
+        for (Perfil perfil : empresa.getUsuario().getRoles()) {
+            perfil.setHabilitado(Boolean.TRUE);
+            perfilUsuarioRepository.save(perfil);
+        }
+
         empresa.setHabilitado(true);
         return repository.save(empresa);
     }

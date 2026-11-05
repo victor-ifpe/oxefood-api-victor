@@ -1,8 +1,8 @@
 package br.edu.ifpe.oxefood.api.empresa;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.br.CNPJ;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +15,13 @@ import lombok.NoArgsConstructor;
 public class EmpresaDTO {
 
     private Long id;
+
+    @NotBlank(message = "O e-mail é de preenchimento obrigatório")
+    @Email
+    private String email;
+
+    @NotBlank(message = "A senha é de preenchimento obrigatório")
+    private String password;
 
     @NotBlank(message = "O site é obrigatório")
     @Length(max = 100, message = "O site não pode exceder 100 caracteres")
