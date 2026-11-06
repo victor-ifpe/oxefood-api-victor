@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/empresa")
+@Tag(name = "API Empresa", description = "API responsável pelos serviços da empresa no sistema")
+
 public class EmpresaController {
 
     private final EmpresaService empresaService;

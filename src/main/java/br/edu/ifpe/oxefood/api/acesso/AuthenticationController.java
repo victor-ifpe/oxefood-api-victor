@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpe.oxefood.api.seguranca.JwtService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "API Autenticação", description = "API responsável pelos serviços de autenticação no sistema")
+
 public class AuthenticationController {
 
   private final JwtService jwtService;

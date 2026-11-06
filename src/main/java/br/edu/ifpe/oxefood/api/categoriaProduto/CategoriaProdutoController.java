@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/categoria-produto")
+@Tag(name = "API Categoria Produto", description = "API responsável pelos serviços de categoria de produto no sistema")
+
 public class CategoriaProdutoController {
 
     private final CategoriaProdutoService service;
