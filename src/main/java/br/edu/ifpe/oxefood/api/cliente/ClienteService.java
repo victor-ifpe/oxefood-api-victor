@@ -127,7 +127,7 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente cadastrar(ClienteDTO dto) {
+    public Cliente cadastrar(ClienteDTO dto, Usuario usuarioLogado) {
 
         Cliente cliente = build(dto);
 
@@ -138,6 +138,7 @@ public class ClienteService {
             perfilUsuarioRepository.save(perfil);
         }
 
+        cliente.setCriadoPor(usuarioLogado);
         cliente.setHabilitado(true);
         return repository.save(cliente);
     }
@@ -151,10 +152,10 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente atualizar(ClienteDTO dto) {
+    public Cliente atualizar(ClienteDTO dto, Usuario usuarioLogado) {
 
         Cliente cliente = build(dto);
-
+        cliente.setUltimaModificacaoPor(usuarioLogado);
         return repository.save(cliente);
     }
 
