@@ -1,5 +1,6 @@
 package br.edu.ifpe.oxefood.api.acesso;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,9 +37,10 @@ public class AuthenticationController {
     Map<Object, Object> loginResponse = new HashMap<>();
     loginResponse.put("username", authenticatedUser.getUsername());
     loginResponse.put("token", jwtToken);
-    loginResponse.put("tokenExpiresIn", jwtService.getExpirationTime());
+
+    Date tokenExpiresIn = new Date(System.currentTimeMillis() + jwtService.getExpirationTime());
+    loginResponse.put("tokenExpiresIn", tokenExpiresIn);
 
     return loginResponse;
   }
-
 }
