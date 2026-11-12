@@ -13,6 +13,7 @@ import br.edu.ifpe.oxefood.api.acesso.UsuarioService;
 import br.edu.ifpe.oxefood.exception.ClienteException;
 import br.edu.ifpe.oxefood.modelo.cliente.EnderecoCliente;
 import br.edu.ifpe.oxefood.modelo.cliente.EnderecoClienteRepository;
+import br.edu.ifpe.oxefood.util.EmailSender;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -22,15 +23,17 @@ public class ClienteService {
     private final EnderecoClienteRepository enderecoClienteRepository;
     private final UsuarioService usuarioService;
     private final PerfilRepository perfilUsuarioRepository;
+    private final EmailSender emailSender;
 
     public ClienteService(
             ClienteRepository repository,
             EnderecoClienteRepository enderecoClienteRepository, UsuarioService usuarioService,
-            PerfilRepository perfilUsuarioRepository) {
+            PerfilRepository perfilUsuarioRepository, EmailSender emailSender) {
         this.repository = repository;
         this.enderecoClienteRepository = enderecoClienteRepository;
         this.usuarioService = usuarioService;
         this.perfilUsuarioRepository = perfilUsuarioRepository;
+        this.emailSender = emailSender;
 
     }
 
@@ -140,7 +143,11 @@ public class ClienteService {
 
         cliente.setCriadoPor(usuarioLogado);
         cliente.setHabilitado(true);
-        return repository.save(cliente);
+
+        Cliente clienteSalvo = repository.save(cliente);
+        emailSender.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
+        return clienteSalvo;
+
     }
 
     public List<Cliente> listar() {
