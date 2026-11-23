@@ -2,7 +2,10 @@ package br.edu.ifpe.oxefood.api.produto;
 
 import java.util.List;
 
+import br.edu.ifpe.oxefood.util.Util;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.ifpe.oxefood.exception.ProdutoException;
 import br.edu.ifpe.oxefood.api.categoriaProduto.CategoriaProduto;
@@ -133,6 +136,20 @@ public class ProdutoService {
         }
 
         return listaProdutos;
+    }
+
+    @Transactional
+    public Produto saveImage(Long id, MultipartFile imagem) {
+
+        Produto produto = buscarPorId(id);
+
+        String imagemUpada = Util.fazerUploadImagem(imagem);
+
+        if (imagemUpada != null) {
+            produto.setImagem(imagemUpada);
+        }
+
+        return repository.save(produto);
     }
 
 }
