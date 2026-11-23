@@ -25,7 +25,8 @@ public class Util {
                     + LocalDateTime.now().getMinute() + "-"
                     + LocalDateTime.now().getSecond() + " - ";
 
-            String nomeOriginalArquivo = imagem.getOriginalFilename();
+            // Descarta qualquer caminho enviado junto com o nome do arquivo
+            String nomeOriginalArquivo = new File(String.valueOf(imagem.getOriginalFilename())).getName();
             nomeArquivoComDataHora = dataHora + nomeOriginalArquivo;
             try {
 
@@ -60,6 +61,20 @@ public class Util {
             return nomeArquivoComDataHora;
         } else {
             return null;
+        }
+    }
+
+    public static void removerImagem(String nomeArquivo) {
+
+        if (nomeArquivo == null || nomeArquivo.isBlank()) {
+            return;
+        }
+
+        File arquivo = new File(LOCAL_ARMAZENAMENTO_IMAGENS + "/imagens_cadastradas"
+                + File.separator + new File(nomeArquivo).getName());
+
+        if (arquivo.exists() && !arquivo.delete()) {
+            System.out.println("Não foi possível remover o arquivo " + arquivo.getAbsolutePath());
         }
     }
 }

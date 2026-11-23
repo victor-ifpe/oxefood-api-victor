@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpe.oxefood.api.acesso.UsuarioService;
@@ -46,6 +47,13 @@ public class ClienteController {
     @GetMapping
     public ResponseEntity<List<Cliente>> listar() {
         return ResponseEntity.ok(clienteService.listar());
+    }
+
+    @PostMapping("/filtrar")
+    public ResponseEntity<List<Cliente>> filtrar(
+            @RequestParam(value = "pesquisa", required = false) String pesquisa) {
+
+        return ResponseEntity.ok(clienteService.filtrar(pesquisa));
     }
 
     @GetMapping("/{id}")

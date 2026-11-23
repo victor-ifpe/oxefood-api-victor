@@ -48,5 +48,8 @@ public class Empresa extends EntidadeAuditavel {
 
     @Column(length = 15)
     private String foneAlternativo;
-    
+
+    @Column
+    private String logo;
+
 }

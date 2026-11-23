@@ -154,6 +154,25 @@ public class ClienteService {
         return repository.findAll();
     }
 
+    public List<Cliente> filtrar(String pesquisa) {
+
+        if (pesquisa == null || pesquisa.trim().isEmpty()) {
+            return repository.findAll();
+        }
+
+        String termo = pesquisa.trim();
+
+        // O CPF é armazenado somente com dígitos, então pontos e traço são descartados
+        String cpf = termo.replaceAll("\\D", "");
+        boolean possuiLetras = termo.chars().anyMatch(Character::isLetter);
+
+        if (!possuiLetras && !cpf.isEmpty()) {
+            return repository.findByCpfContainingOrderByNomeAsc(cpf);
+        }
+
+        return repository.findByNomeContainingIgnoreCaseOrderByNomeAsc(termo);
+    }
+
     public Cliente buscarPorId(Long id) {
         return repository.findById(id).get();
     }
